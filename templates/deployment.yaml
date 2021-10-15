@@ -31,11 +31,11 @@ spec:
             timeoutSeconds: 1
           resources:
             limits:
-              cpu: "500"
+              cpu: "100m"
               memory: 128Mi
             requests:
-              cpu: "100"
+              cpu: "50m"
               memory: 64Mi
-      serviceAccount: rebuildah-receiver
-      serviceAccountName: rebuildah-receiver
+      serviceAccount: {{ template "rebuildah-receiver.fullname" . }}
+      serviceAccountName: {{ template "rebuildah-receiver.fullname" . }}
   test: false

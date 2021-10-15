@@ -11,4 +11,4 @@ spec:
     targetPort: 8080-8080
   to:
     kind: Service
-    name: rebuildah-receiver
+    name: {{ template "rebuildah-receiver.fullname" . }}

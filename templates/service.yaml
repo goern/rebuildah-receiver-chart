@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       targetPort: 8080
   selector:
-    app: rebuildah-receiver
+    {{- include "rebuildah-receiver.matchLabels" . | nindent 4 }}
   type: ClusterIP

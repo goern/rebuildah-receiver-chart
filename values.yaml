@@ -1,0 +1,10 @@
+# Default values for rebuildah-receiver.
+
+domainname: quay-io-thoth-station.thoth-station.ninja
+
+fullnameOverride: false
+nameOverride: false
+
+serviceAccount:
+  create: true
+  name: receiver

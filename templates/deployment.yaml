@@ -1,0 +1,41 @@
+{{/* vim: set filetype=mustache: */}}
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  creationTimestamp: null
+  generation: 10
+  name: {{ template "rebuildah-receiver.fullname" . }}
+  labels: {{- include "rebuildah-receiver.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 4
+  selector:
+    {{- include "rebuildah-receiver.matchLabels" . | nindent 4 }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        {{- include "rebuildah-receiver.matchLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - image: quay.io/goern/rebuildah-receiver:v0.1.0-dev
+          name: rebuildah-receiver
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /_healthz
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "500"
+              memory: 128Mi
+            requests:
+              cpu: "100"
+              memory: 64Mi
+      serviceAccount: rebuildah-receiver
+      serviceAccountName: rebuildah-receiver
+  test: false
